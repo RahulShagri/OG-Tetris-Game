@@ -101,6 +101,8 @@ def create_blocks():
     tetrominos_handler.audio_effectsDispatcher("selection.wav")
 
     # Set up the speed for level chosen by the user
+    # CSV file contains speed to reach the bottom of the board, i.e. to cross 20 cells. Divide the speed by 20 to get
+    # time per each cell
     block_speeds_data = pd.read_csv("block_speeds_data.csv")
     config.speed = (block_speeds_data.values[config.level][1]) / 20
 

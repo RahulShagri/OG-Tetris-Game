@@ -1,11 +1,11 @@
 import time
-
 import config
 from theme_settings import *
 from config import *
 import tetrominos_handler
 import threading
 
+# Configure viewport
 dpg.setup_viewport()
 dpg.set_viewport_title("Tetris Game")
 dpg.configure_viewport(0, x_pos=0, y_pos=0, width=1000, height=735)
@@ -16,15 +16,20 @@ dpg.set_viewport_min_width(100)
 
 
 def set_main_window():
+    # Function sets up the displays of the main game window
+
     # Play audio for selection made
     tetrominos_handler.audio_effectsDispatcher("selection.wav")
 
+    # Get level entered by the user
     config.level = dpg.get_value(item=item_id["displays"]["enter_level"])
 
+    # Main window config
     with dpg.window(pos=[0, 0], autosize=True, no_collapse=True, no_resize=True, no_close=True, no_move=True,
                     no_title_bar=True, id=item_id["windows"]["main_window"]):
 
         with dpg.group(horizontal=True):
+            # Score board and help window config
             with dpg.child(width=320, id=item_id["windows"]["score_window"]):
                 dpg.add_dummy(height=10)
 
@@ -70,6 +75,7 @@ def set_main_window():
                     dpg.set_axis_limits(axis=x, ymin=0, ymax=8)
                     dpg.set_axis_limits(axis=y, ymin=0, ymax=4)
 
+            # Tetris board window config
             with dpg.group():
                 with dpg.plot(no_menus=False, no_title=True, no_box_select=True, no_mouse_pos=True, width=325,
                               height=650, equal_aspects=True, id=item_id["windows"]["tetris_board"]):
@@ -89,6 +95,7 @@ def set_main_window():
                 dpg.set_item_font(item=item_id["buttons"]["play_button"], font=play_font)
                 dpg.set_item_theme(item=item_id["buttons"]["play_button"], theme=play_button_theme)
 
+            # Statistics window config
             with dpg.child(autosize_x=True):
                 dpg.add_dummy(height=10)
 
@@ -127,6 +134,8 @@ def set_main_window():
 
 
 def press_any_key_to_start():
+    # Function continues to show enter level screen when any key is pressed
+
     # Play audio effect to indicate selection
     tetrominos_handler.audio_effectsDispatcher("selection.wav")
 
@@ -137,7 +146,7 @@ def press_any_key_to_start():
     dpg.configure_item(item=enter_level_screen, show=True, modal=True)
     dpg.set_primary_window(window=enter_level_screen, value=True)
 
-
+# Welcome screen config
 with dpg.window(modal=True, autosize=True, no_collapse=True, no_resize=True, no_close=True, no_move=True,
                 no_title_bar=True) as welcome_screen:
     width, height, channels, data = dpg.load_image("textures/welcome_screen.jpg")
@@ -148,6 +157,7 @@ with dpg.window(modal=True, autosize=True, no_collapse=True, no_resize=True, no_
     dpg.add_key_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["key_release_handler"])
     dpg.add_mouse_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["mouse_release_handler"])
 
+# Enter level screen config
 with dpg.window(autosize=True, no_collapse=True, no_resize=True, no_close=True, no_move=True,
                 no_title_bar=True,show=False) as enter_level_screen:
     dpg.add_dummy(height=300)
@@ -161,21 +171,21 @@ with dpg.window(autosize=True, no_collapse=True, no_resize=True, no_close=True, 
             dpg.add_input_int(label="", step=0, min_value=0, max_value=9, width=30, on_enter=True,
                               callback=set_main_window, id=item_id["displays"]["enter_level"])
 
-            # If continue button is required, use this
-            # continue_button = dpg.add_button(label="Continue", callback=set_main_window)
-            # dpg.set_item_theme(item=continue_button, theme=play_button_theme)
-
 
 def background_theme():
+    # Function starts a new thread to play the background theme
     play_theme_thread = threading.Thread(name="play theme", target=theme_audio, args=(), daemon=True)
     play_theme_thread.start()
 
 
 def theme_audio():
+    # Function loops the background theme
     while True:
         tetrominos_handler.audio_effectsDispatcher("theme.mp3")
         time.sleep(84)
 
+
+# Initiates the theme playback
 background_theme()
 
 dpg.set_primary_window(window=welcome_screen, value=True)
