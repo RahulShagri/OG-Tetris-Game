@@ -11,6 +11,7 @@ item_id = {
         "statistics_window": dpg.generate_uuid(),
     },
     "displays": {
+        "enter_level": dpg.generate_uuid(),
         "level_text": dpg.generate_uuid(),
         "full_line_text": dpg.generate_uuid(),
         "score_text": dpg.generate_uuid(),
@@ -25,6 +26,11 @@ item_id = {
     },
     "registries": {
         "texture_registry": dpg.generate_uuid(),
+        "key_release_handler": dpg.generate_uuid(),
+        "mouse_release_handler": dpg.generate_uuid(),
+    },
+    "buttons": {
+        "play_button": dpg.generate_uuid(),
     },
     "block_texture": {
         "I_block": dpg.generate_uuid(),

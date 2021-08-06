@@ -5,8 +5,11 @@ import math
 import random
 import pandas as pd
 import config
+from theme_settings import *
 from config import *
 import tetrominos_handler
+
+dpg.setup_registries()  # Registries for mouse and keyboard press events
 
 # Load and add all block textures
 with dpg.texture_registry(id=item_id["registries"]["texture_registry"]):
@@ -71,26 +74,12 @@ def rotate_block(cells: int, rotation_point: int):
                            pmax=[config.cells_occupied[-1 - n][0] + 1, config.cells_occupied[-1 - n][1]])
 
 
-# def start_game():
-#     # Function initiates the main game
-#     config.level = int(dpg.get_value(item=item_id["displays"]["level_text"]))
-#
-#     block_speeds_data = pd.read_csv("block_speeds_data.csv")
-#
-#     while config.level < 30:
-#         config.speed = (block_speeds_data.values[config.level][1])/20
-#
-#         create_blocksDispatcher()
-#
-#         print(f"level {config.level} over")
-#         time.sleep(2)
-#         dpg.delete_item(item=item_id["windows"]["tetris_board"], children_only=True)
-#         dpg.delete_item(item=item_id["windows"]["next_block_board"], children_only=True)
-#         config.level += 1
-
-
 def create_blocksDispatcher():
     # Function creates a new thread that controls the continuous movement of the new blocks
+    dpg.add_key_press_handler(callback=tetrominos_handler.key_release_handler)
+    dpg.configure_item(item=item_id["buttons"]["play_button"], enabled=False)
+    dpg.set_item_disabled_theme(item=item_id["buttons"]["play_button"], theme=play_button_theme)
+
     create_blocks_thread = threading.Thread(name="create blocks", target=create_blocks, args=(), daemon=True)
     create_blocks_thread.start()
 
@@ -131,7 +120,9 @@ def create_blocks():
             time.sleep(config.speed)
             temp_block.move_blockDispatcher()
 
-    print("Game over!")
+    dpg.draw_rectangle(pmin=[0,0], pmax=[10, 20], color=[0, 0, 0, 150], thickness=0,
+                       fill=[0, 0, 0, 150], parent=item_id["windows"]["tetris_board"])
+    dpg.draw_text(pos=[0.5, 11], text="GAME OVER", size=1, parent=item_id["windows"]["tetris_board"])
 
 
 def check_complete_line():
