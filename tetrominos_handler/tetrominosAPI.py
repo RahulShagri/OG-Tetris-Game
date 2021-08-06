@@ -174,6 +174,9 @@ def check_complete_line():
                 block_speeds_data = pd.read_csv("block_speeds_data.csv")
                 config.speed = (block_speeds_data.values[config.level][1]) / 20
 
+                # Play audio effect
+                audio_effectsDispatcher("success.wav")
+
             block_cells = []
 
             for block in config.item_id["blocks"].keys():
