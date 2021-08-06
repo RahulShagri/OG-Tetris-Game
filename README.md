@@ -1,5 +1,7 @@
 # :joystick: Tetris Game
 
+![A demonstration of the snake game](resources/demo.gif)
+
 The original Tetris tile-matching game as adopted by IBM PC.
 
 Game developed purely on python using the [Dear PyGui Framework](https://github.com/hoffstadt/DearPyGui).
@@ -17,7 +19,3 @@ Game developed purely on python using the [Dear PyGui Framework](https://github.
 ```pip install -r requirements.txt``` 
 
 4. Run the <i>tetris_game.py</i> file to start the application.
-
-<h2>:video_game: Demo</h2>
-
-![A demonstration of the snake game](resources/demo.gif)
