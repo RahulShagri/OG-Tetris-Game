@@ -169,7 +169,7 @@ with dpg.window(autosize=True, no_collapse=True, no_resize=True, no_close=True, 
             dpg.add_text(default_value="Enter your level (0-9) > ")
             dpg.add_same_line()
             dpg.add_input_int(label="", step=0, min_value=0, max_value=9, width=30, on_enter=True,
-                              callback=set_main_window, id=item_id["displays"]["enter_level"])
+                              default_value=0, callback=set_main_window, id=item_id["displays"]["enter_level"])
 
 
 def background_theme():
