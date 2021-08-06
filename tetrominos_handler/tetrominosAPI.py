@@ -3,7 +3,9 @@ import time
 import threading
 import math
 import random
+from playsound2 import playsound
 import pandas as pd
+import os
 import config
 from theme_settings import *
 from config import *
@@ -74,6 +76,16 @@ def rotate_block(cells: int, rotation_point: int):
                            pmax=[config.cells_occupied[-1 - n][0] + 1, config.cells_occupied[-1 - n][1]])
 
 
+def audio_effectsDispatcher(file_name):
+    # Function creates a new thread that runs the audio file so that the main code does not lag or interfere
+    play_audio_thread = threading.Thread(name="play audio", target=play_audio_effect, args=(file_name,), daemon=True)
+    play_audio_thread.start()
+
+
+def play_audio_effect(file_name):
+    playsound(os.path.abspath(os.path.abspath("tetris_game.py")[:-14]) + "\\sounds\\" + file_name)
+
+
 def create_blocksDispatcher():
     # Function creates a new thread that controls the continuous movement of the new blocks
     dpg.add_key_press_handler(callback=tetrominos_handler.key_release_handler)
@@ -85,9 +97,10 @@ def create_blocksDispatcher():
 
 
 def create_blocks():
-    # Initiates creating blocks for a particular level
+    # Play audio effect to indicate selection
+    tetrominos_handler.audio_effectsDispatcher("selection.wav")
 
-    # Set up the speed for level 0
+    # Set up the speed for level chosen by the user
     block_speeds_data = pd.read_csv("block_speeds_data.csv")
     config.speed = (block_speeds_data.values[config.level][1]) / 20
 
@@ -120,9 +133,18 @@ def create_blocks():
             time.sleep(config.speed)
             temp_block.move_blockDispatcher()
 
+    time.sleep(0.5)
+
+    # Fade the board by placing a semi-transparent rectangle
     dpg.draw_rectangle(pmin=[0,0], pmax=[10, 20], color=[0, 0, 0, 150], thickness=0,
                        fill=[0, 0, 0, 150], parent=item_id["windows"]["tetris_board"])
+
+    # Show GAME OVER text on the board
     dpg.draw_text(pos=[0.5, 11], text="GAME OVER", size=1, parent=item_id["windows"]["tetris_board"])
+
+    time.sleep(0.5)
+    # Play the game over tune
+    audio_effectsDispatcher("gameover.wav")
 
 
 def check_complete_line():
@@ -164,6 +186,8 @@ def check_complete_line():
                         dpg.delete_item(item=cell_id)
                         block_cells.append([block, cell])
                         config.cells_occupied.remove([cell_number[0] - 1, cell_number[1]])
+
+            audio_effectsDispatcher("line.wav")
 
             for pair in block_cells:
                 del config.item_id["blocks"][pair[0]][pair[1]]
@@ -272,6 +296,8 @@ def key_release_handler(sender, app_data):
             config.score += cells_dropped*2
             dpg.set_value(item=item_id["displays"]["score_text"], value=config.score)
 
+            audio_effectsDispatcher("fall.wav")
+
         for n in range(cells):
             if app_data == 37:  # Move left
                 config.cells_occupied[-1 - n][0] -= 1  # Shift the X Coordinate left by 1 unit
@@ -300,7 +326,8 @@ def key_release_handler(sender, app_data):
                                pmin=[config.cells_occupied[-1 - n][0], config.cells_occupied[-1 - n][1] + 1],
                                pmax=[config.cells_occupied[-1 - n][0] + 1, config.cells_occupied[-1 - n][1]])
 
-        # Check if soft drop was successfully completed and add to scoring points
+        # Check if soft drop was successfully completed and add to scoring points and play audio effect
         if app_data == 40:
             config.score += 1
             dpg.set_value(item=item_id["displays"]["score_text"], value=config.score)
+            audio_effectsDispatcher("fall.wav")

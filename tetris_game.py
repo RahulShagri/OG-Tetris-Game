@@ -1,7 +1,10 @@
+import time
+
 import config
 from theme_settings import *
 from config import *
 import tetrominos_handler
+import threading
 
 dpg.setup_viewport()
 dpg.set_viewport_title("Tetris Game")
@@ -13,6 +16,9 @@ dpg.set_viewport_min_width(100)
 
 
 def set_main_window():
+    # Play audio for selection made
+    tetrominos_handler.audio_effectsDispatcher("selection.wav")
+
     config.level = dpg.get_value(item=item_id["displays"]["enter_level"])
 
     with dpg.window(pos=[0, 0], autosize=True, no_collapse=True, no_resize=True, no_close=True, no_move=True,
@@ -121,7 +127,11 @@ def set_main_window():
 
 
 def press_any_key_to_start():
-    dpg.delete_item(item=item_id["registries"]["key_release_handler"])
+    # Play audio effect to indicate selection
+    tetrominos_handler.audio_effectsDispatcher("selection.wav")
+
+    # Continue with setting up enter level screen
+    #dpg.delete_item(item=item_id["registries"]["key_release_handler"])
     dpg.delete_item(item=item_id["registries"]["mouse_release_handler"])
     dpg.delete_item(item=welcome_screen)
     dpg.configure_item(item=enter_level_screen, show=True, modal=True)
@@ -135,7 +145,7 @@ with dpg.window(modal=True, autosize=True, no_collapse=True, no_resize=True, no_
     welcome_screen_image = dpg.add_static_texture(width, height, data, parent=item_id["registries"]["texture_registry"])
     dpg.add_image(texture_id=welcome_screen_image, width=984, height=688)
 
-    dpg.add_key_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["key_release_handler"])
+    #dpg.add_key_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["key_release_handler"])
     dpg.add_mouse_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["mouse_release_handler"])
 
 with dpg.window(autosize=True, no_collapse=True, no_resize=True, no_close=True, no_move=True,
@@ -148,11 +158,26 @@ with dpg.window(autosize=True, no_collapse=True, no_resize=True, no_close=True, 
         with dpg.group():
             dpg.add_text(default_value="Enter your level (0-9) > ")
             dpg.add_same_line()
-            dpg.add_input_int(label="", step=0, min_value=0, max_value=9, width=30, id=item_id["displays"]["enter_level"])
+            dpg.add_input_int(label="", step=0, min_value=0, max_value=9, width=30, on_enter=True,
+                              callback=set_main_window, id=item_id["displays"]["enter_level"])
 
-            continue_button = dpg.add_button(label="Continue", callback=set_main_window)
-            dpg.set_item_theme(item=continue_button, theme=play_button_theme)
+            # If continue button is required, use this
+            # continue_button = dpg.add_button(label="Continue", callback=set_main_window)
+            # dpg.set_item_theme(item=continue_button, theme=play_button_theme)
 
+
+def background_theme():
+    play_theme_thread = threading.Thread(name="play theme", target=theme_audio, args=(), daemon=True)
+    play_theme_thread.start()
+
+
+def theme_audio():
+    time.sleep(3)
+    while True:
+        tetrominos_handler.audio_effectsDispatcher("theme.mp3")
+        time.sleep(85)
+
+background_theme()
 
 dpg.set_primary_window(window=welcome_screen, value=True)
 dpg.start_dearpygui()
