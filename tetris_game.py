@@ -131,7 +131,7 @@ def press_any_key_to_start():
     tetrominos_handler.audio_effectsDispatcher("selection.wav")
 
     # Continue with setting up enter level screen
-    #dpg.delete_item(item=item_id["registries"]["key_release_handler"])
+    dpg.delete_item(item=item_id["registries"]["key_release_handler"])
     dpg.delete_item(item=item_id["registries"]["mouse_release_handler"])
     dpg.delete_item(item=welcome_screen)
     dpg.configure_item(item=enter_level_screen, show=True, modal=True)
@@ -145,7 +145,7 @@ with dpg.window(modal=True, autosize=True, no_collapse=True, no_resize=True, no_
     welcome_screen_image = dpg.add_static_texture(width, height, data, parent=item_id["registries"]["texture_registry"])
     dpg.add_image(texture_id=welcome_screen_image, width=984, height=688)
 
-    #dpg.add_key_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["key_release_handler"])
+    dpg.add_key_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["key_release_handler"])
     dpg.add_mouse_release_handler(callback=press_any_key_to_start, id=item_id["registries"]["mouse_release_handler"])
 
 with dpg.window(autosize=True, no_collapse=True, no_resize=True, no_close=True, no_move=True,
@@ -172,10 +172,9 @@ def background_theme():
 
 
 def theme_audio():
-    time.sleep(3)
     while True:
         tetrominos_handler.audio_effectsDispatcher("theme.mp3")
-        time.sleep(85)
+        time.sleep(84)
 
 background_theme()
 

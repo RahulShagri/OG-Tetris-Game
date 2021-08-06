@@ -133,8 +133,6 @@ def create_blocks():
             time.sleep(config.speed)
             temp_block.move_blockDispatcher()
 
-    time.sleep(0.5)
-
     # Fade the board by placing a semi-transparent rectangle
     dpg.draw_rectangle(pmin=[0,0], pmax=[10, 20], color=[0, 0, 0, 150], thickness=0,
                        fill=[0, 0, 0, 150], parent=item_id["windows"]["tetris_board"])
@@ -142,7 +140,6 @@ def create_blocks():
     # Show GAME OVER text on the board
     dpg.draw_text(pos=[0.5, 11], text="GAME OVER", size=1, parent=item_id["windows"]["tetris_board"])
 
-    time.sleep(0.5)
     # Play the game over tune
     audio_effectsDispatcher("gameover.wav")
 
