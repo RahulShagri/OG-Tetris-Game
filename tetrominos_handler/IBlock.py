@@ -20,7 +20,7 @@ class IBlock:
             config.cells_occupied.append([3 + n, 19])
 
             # Draw the cell
-            dpg.draw_image(texture_id=item_id["block_texture"]["I_block"], pmin=[3 + n, 20], pmax=[4 + n, 19],
+            dpg.draw_image(texture_tag=item_id["block_texture"]["I_block"], pmin=[3 + n, 20], pmax=[4 + n, 19],
                            parent=item_id["windows"]["tetris_board"],
                            id=config.item_id["blocks"][f"{config.block_count}"][f"{n}"])
 
@@ -68,7 +68,7 @@ def draw_next_IBlock():
         # Loop draws the complete block on the "next" board
 
         # Draw the cell
-        dpg.draw_image(texture_id=item_id["block_texture"]["I_block"], pmin=[2 + n, 4], pmax=[3 + n, 3],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["I_block"], pmin=[2 + n, 4], pmax=[3 + n, 3],
                        parent=item_id["windows"]["next_block_board"])
 
 
@@ -77,7 +77,7 @@ def draw_statistics_IBlock():
         # Loop draws the complete block on the "next" board
 
         # Draw the cell
-        dpg.draw_image(texture_id=item_id["block_texture"]["I_block"], pmin=[2 + n, 16], pmax=[3 + n, 15],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["I_block"], pmin=[2 + n, 16], pmax=[3 + n, 15],
                        parent=item_id["windows"]["statistics_window"])
 
     dpg.draw_line(p1=[6.5, 15.5], p2=[7.5, 15.5], thickness=0.1, color=[168, 168, 168],

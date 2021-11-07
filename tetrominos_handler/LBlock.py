@@ -20,7 +20,7 @@ class LBlock:
             config.cells_occupied.append([3 + n, 18])
 
             # Draw the cell
-            dpg.draw_image(texture_id=item_id["block_texture"]["L_block"], pmin=[3 + n, 19], pmax=[4 + n, 18],
+            dpg.draw_image(texture_tag=item_id["block_texture"]["L_block"], pmin=[3 + n, 19], pmax=[4 + n, 18],
                            parent=item_id["windows"]["tetris_board"],
                            id=config.item_id["blocks"][f"{config.block_count}"][f"{n}"])
 
@@ -30,7 +30,7 @@ class LBlock:
         # Add point to cells_occupied list
         config.cells_occupied.append([5, 19])
         # Draw the cell
-        dpg.draw_image(texture_id=item_id["block_texture"]["L_block"], pmin=[5, 20], pmax=[6, 19],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["L_block"], pmin=[5, 20], pmax=[6, 19],
                        parent=item_id["windows"]["tetris_board"],
                        id=config.item_id["blocks"][f"{config.block_count}"]["3"])
 
@@ -75,24 +75,24 @@ class LBlock:
 def draw_next_LBlock():
     for n in range(3):
         # Loop draws the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["L_block"], pmin=[3 + n, 3], pmax=[4 + n, 2],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["L_block"], pmin=[3 + n, 3], pmax=[4 + n, 2],
                        parent=item_id["windows"]["next_block_board"])
 
     # Draw the final cell on the top
     # Draw the cell
-    dpg.draw_image(texture_id=item_id["block_texture"]["L_block"], pmin=[5, 4], pmax=[6, 3],
+    dpg.draw_image(texture_tag=item_id["block_texture"]["L_block"], pmin=[5, 4], pmax=[6, 3],
                    parent=item_id["windows"]["next_block_board"])
 
 
 def draw_statistics_LBlock():
     for n in range(3):
         # Loop draws the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["L_block"], pmin=[1 + n, 18], pmax=[2 + n, 17],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["L_block"], pmin=[1 + n, 18], pmax=[2 + n, 17],
                        parent=item_id["windows"]["statistics_window"])
 
     # Draw the final cell on the top
     # Draw the cell
-    dpg.draw_image(texture_id=item_id["block_texture"]["L_block"], pmin=[3, 19], pmax=[4, 18],
+    dpg.draw_image(texture_tag=item_id["block_texture"]["L_block"], pmin=[3, 19], pmax=[4, 18],
                    parent=item_id["windows"]["statistics_window"])
 
     dpg.draw_line(p1=[6.5, 18], p2=[7.5, 18], thickness=0.1, color=[168, 168, 168],

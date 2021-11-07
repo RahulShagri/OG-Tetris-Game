@@ -20,7 +20,7 @@ class ZBlock:
             config.cells_occupied.append([3 + n, 19])
 
             # Draw the cell
-            dpg.draw_image(texture_id=item_id["block_texture"]["Z_block"], pmin=[3 + n, 20], pmax=[4 + n, 19],
+            dpg.draw_image(texture_tag=item_id["block_texture"]["Z_block"], pmin=[3 + n, 20], pmax=[4 + n, 19],
                            parent=item_id["windows"]["tetris_board"],
                            id=config.item_id["blocks"][f"{config.block_count}"][f"{n}"])
 
@@ -31,7 +31,7 @@ class ZBlock:
             # Add point to cells_occupied list
             config.cells_occupied.append([4 + n, 18])
             # Draw the cell
-            dpg.draw_image(texture_id=item_id["block_texture"]["Z_block"], pmin=[4 + n, 19], pmax=[5 + n, 18],
+            dpg.draw_image(texture_tag=item_id["block_texture"]["Z_block"], pmin=[4 + n, 19], pmax=[5 + n, 18],
                            parent=item_id["windows"]["tetris_board"],
                            id=config.item_id["blocks"][f"{config.block_count}"][f"{n + 2}"])
 
@@ -76,24 +76,24 @@ class ZBlock:
 def draw_next_ZBlock():
     for n in range(2):
         # Loop draws the bottom layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["Z_block"], pmin=[4 + n, 3], pmax=[5 + n, 2],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["Z_block"], pmin=[4 + n, 3], pmax=[5 + n, 2],
                        parent=item_id["windows"]["next_block_board"])
 
     for n in range(2):
         # Loop draws the top layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["Z_block"], pmin=[3 + n, 4], pmax=[4 + n, 3],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["Z_block"], pmin=[3 + n, 4], pmax=[4 + n, 3],
                        parent=item_id["windows"]["next_block_board"])
 
 
 def draw_statistics_ZBlock():
     for n in range(2):
         # Loop draws the bottom layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["Z_block"], pmin=[1 + n, 8], pmax=[2 + n, 7],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["Z_block"], pmin=[1 + n, 8], pmax=[2 + n, 7],
                        parent=item_id["windows"]["statistics_window"])
 
     for n in range(2):
         # Loop draws the top layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["Z_block"], pmin=[2 + n, 7], pmax=[3 + n, 6],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["Z_block"], pmin=[2 + n, 7], pmax=[3 + n, 6],
                        parent=item_id["windows"]["statistics_window"])
 
     dpg.draw_line(p1=[6.5, 7], p2=[7.5, 7], thickness=0.1, color=[168, 168, 168],

@@ -22,7 +22,7 @@ class OBlock:
                 config.cells_occupied.append([4 + m, 19 - n])
 
                 # Draw the cell
-                dpg.draw_image(texture_id=item_id["block_texture"]["O_block"], pmin=[4 + m, 20 - n], pmax=[5 + m, 19 - n],
+                dpg.draw_image(texture_tag=item_id["block_texture"]["O_block"], pmin=[4 + m, 20 - n], pmax=[5 + m, 19 - n],
                                parent=item_id["windows"]["tetris_board"],
                                id=config.item_id["blocks"][f"{config.block_count}"][f"{cell_count}"])
                 cell_count += 1
@@ -69,24 +69,24 @@ class OBlock:
 def draw_next_OBlock():
     for n in range(2):
         # Loop draws the bottom layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["O_block"], pmin=[3 + n, 3], pmax=[4 + n, 2],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["O_block"], pmin=[3 + n, 3], pmax=[4 + n, 2],
                        parent=item_id["windows"]["next_block_board"])
 
     for n in range(2):
         # Loop draws the top layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["O_block"], pmin=[3 + n, 4], pmax=[4 + n, 3],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["O_block"], pmin=[3 + n, 4], pmax=[4 + n, 3],
                        parent=item_id["windows"]["next_block_board"])
 
 
 def draw_statistics_OBlock():
     for n in range(2):
         # Loop draws the bottom layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["O_block"], pmin=[4 + n, 4], pmax=[5 + n, 3],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["O_block"], pmin=[4 + n, 4], pmax=[5 + n, 3],
                        parent=item_id["windows"]["statistics_window"])
 
     for n in range(2):
         # Loop draws the top layer of the complete block on the "next" board
-        dpg.draw_image(texture_id=item_id["block_texture"]["O_block"], pmin=[4 + n, 5], pmax=[5 + n, 4],
+        dpg.draw_image(texture_tag=item_id["block_texture"]["O_block"], pmin=[4 + n, 5], pmax=[5 + n, 4],
                        parent=item_id["windows"]["statistics_window"])
 
     dpg.draw_line(p1=[6.5, 4], p2=[7.5, 4], thickness=0.1, color=[168, 168, 168],

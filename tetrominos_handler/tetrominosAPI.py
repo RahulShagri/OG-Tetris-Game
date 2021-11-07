@@ -11,10 +11,9 @@ from theme_settings import *
 from config import *
 import tetrominos_handler
 
-dpg.setup_registries()  # Registries for mouse and keyboard press events
 
 # Load and add all block textures
-with dpg.texture_registry(id=item_id["registries"]["texture_registry"]):
+with dpg.texture_registry(tag=item_id["registries"]["texture_registry"]):
     # Start a texture registry. Textures will be added later
     pass
 
@@ -22,7 +21,7 @@ for block in block_names:
     # Extract data from images and add static textures for each cell of a block
     width, height, channels, data = dpg.load_image(f"textures/{block}-block.jpg")
 
-    dpg.add_static_texture(width, height, data, id=item_id["block_texture"][f"{block}_block"],
+    dpg.add_static_texture(width, height, data, tag=item_id["block_texture"][f"{block}_block"],
                            parent=item_id["registries"]["texture_registry"])
 
 
@@ -88,9 +87,11 @@ def play_audio_effect(file_name):
 
 def create_blocksDispatcher():
     # Function creates a new thread that controls the continuous movement of the new blocks
-    dpg.add_key_press_handler(callback=tetrominos_handler.key_release_handler)
+    dpg.add_handler_registry(tag=item_id["registries"]["mouse_release_handler"])
+    dpg.add_key_press_handler(callback=tetrominos_handler.key_release_handler,
+                              parent=item_id["registries"]["mouse_release_handler"])
     dpg.configure_item(item=item_id["buttons"]["play_button"], enabled=False)
-    dpg.set_item_disabled_theme(item=item_id["buttons"]["play_button"], theme=play_button_theme)
+    dpg.bind_item_theme(item=item_id["buttons"]["play_button"], theme=play_button_theme)
 
     create_blocks_thread = threading.Thread(name="create blocks", target=create_blocks, args=(), daemon=True)
     create_blocks_thread.start()
